@@ -9,7 +9,7 @@ Android 组件化项目，该项目由两部分组成，这是主要架子部分
 4. [模块](https://github.com/Leeii/LModuleProject)独立运行，利于调试
 5. 利用gradle配置，自动依赖aar
 6. 通过ARouter自动注册模块，免去每集成一个模块需要修改代码
-7. 路由统一管理，清晰明了
+7. [路由统一管理](https://github.com/Leeii/Router-Manager)，清晰明了
 8. 支持项目多baseUrl
 9. ...
 
