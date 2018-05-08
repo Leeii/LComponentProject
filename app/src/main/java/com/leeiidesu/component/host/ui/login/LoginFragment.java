@@ -7,6 +7,7 @@ import android.widget.EditText;
 import com.leeiidesu.component.host.R;
 import com.leeiidesu.component.host.base.DaggerFragment;
 import com.leeiidesu.component.host.dagger.fragment.FragmentComponent;
+import com.leeiidesu.lib.component.router.RouterManager;
 
 import javax.inject.Inject;
 
@@ -36,7 +37,7 @@ public class LoginFragment extends DaggerFragment implements LoginContract.ILogi
 
     @OnClick(R.id.login)
     public void onViewClicked() {
-        mPresenter.login(mUserName.getText().toString(), mPwd.getText().toString());
+        RouterManager.getService().routeToTaskListActivity();
     }
 
     @Override

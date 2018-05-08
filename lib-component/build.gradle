@@ -54,6 +54,9 @@ dependencies {
     // ARouter 路由
     api 'com.alibaba:arouter-api:1.2.4'
 
+    //数据库 objectbox
+    api 'io.objectbox:objectbox-android:1.2.0'
+
 }
 
 

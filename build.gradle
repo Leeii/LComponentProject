@@ -20,7 +20,7 @@ allprojects {
         maven { url 'http://leeiidesu.com/nexus/content/repositories/releases' }
         maven { url 'http://leeiidesu.com/nexus/content/repositories/snapshots/' }
         maven { url "https://jitpack.io" }
-
+        maven { url "http://objectbox.net/beta-repo/" }
     }
 }
 
