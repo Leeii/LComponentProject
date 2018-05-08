@@ -47,6 +47,11 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:8.8.1"
     annotationProcessor "com.alibaba:arouter-compiler:1.1.4"
 
+    debugRuntimeOnly fileTree(dir: 'modules/debug', include: ['*.aar'])
+    releaseRuntimeOnly fileTree(dir: 'modules/release', include: ['*.aar'])
+    runtimeOnly fileTree(dir: 'modules/other', include: ['*.aar'])
+
+
 }
 
 
