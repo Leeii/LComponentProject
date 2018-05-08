@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFF</color>
+    <color name="bg_color">#F4F4F4</color>
+    <color name="line">#E7E7E7</color>
+    <color name="text_black">#333333</color>
+    <color name="text2_black">#666666</color>
+    <color name="text3_black">#999999</color>
+    <color name="blue">#18B4ED</color>
+    <color name="blue_press">#08a4dd</color>
+    <color name="green">#2CCA98</color>
+    <color name="red">#e02626</color>
+    <color name="trans_clr">#00000000</color>
+    <color name="progress_color">#FF009688</color>
+
+    <color name="default_layout_item_pressed_color">#eeeeee</color>
+    <color name="default_layout_item_normal_color">@color/white</color>
+
+</resources>

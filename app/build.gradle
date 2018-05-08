@@ -1,0 +1,120 @@
+apply plugin: 'com.android.application'
+
+
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.leeiidesu.component.host"
+        minSdkVersion 21
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: 'host']
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:design:26.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    implementation project(':lib-component')
+
+    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:8.8.1"
+    annotationProcessor "com.alibaba:arouter-compiler:1.1.4"
+
+}
+
+
+
+afterEvaluate {
+    tasks.matching {
+        // 打包操作的时候
+        (it.name.startsWith('assemble'))
+    }.each { task ->
+        //获取任务构建类型
+        def taskBuildType = task.name.substring(8).toLowerCase()
+        //打印
+        println(taskBuildType)
+
+        //如果任务构建类型为release
+        if (taskBuildType.contains('release')) {
+            task.dependsOn(generateReleaseModuleJson)
+        } else {
+            //默认为debug
+            task.dependsOn(generateDebugModuleJson)
+        }
+    }
+}
+
+/**
+ * 创建library的实现方法
+ * @param buildType 可选 release/debug
+ */
+def generateModuleJson(String buildType) {
+
+    String json = "{\"library\":[{\"path\":\"/host/application/like\",\"name\":\"host\"}"
+
+    FileTree tree = fileTree(dir: "modules/$buildType", include: ['*.aar'])
+
+    for (File file : tree) {
+        if (file.name.startsWith('module-')) {
+            def strArr = file.name.split("[-.]")
+            def name = strArr[1]
+
+            json += ",{\"path\":\"/${name}/application/like\",\"name\":\"${name}\"}"
+        }
+    }
+
+    json += "]}"
+
+    file("src/$buildType/assets/library.json")
+            .withWriter('UTF-8') { within ->
+        within.write(json)
+    }
+}
+
+/**
+ * 创建正式版本的library.json
+ * 输出路径 src/release/assets/library.json
+ */
+task generateReleaseModuleJson() {
+    doFirst {
+        generateModuleJson('release')
+    }
+}
+
+/**
+ * 创建debug版本的library.json
+ * 输出路径 src/debug/assets/library.json
+ */
+task generateDebugModuleJson() {
+    doFirst {
+        generateModuleJson('debug')
+    }
+}
+
